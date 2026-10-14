@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'transcriber_port.dart';
 import 'whisper_request.dart';
+import 'storage_native.dart' as storage;
 
 Map<String, dynamic> invokeWhisper(String requestJson) {
   final input = requestJson.toNativeUtf8();
@@ -148,6 +149,7 @@ class LocalWhisperTranscriber implements TranscriberPort {
     void Function(double) onProgress,
   ) async {
     if (!await isReady()) throw StateError('Modello non disponibile');
+    audio = await storage.resolveNativeAudio(audio);
     final converted = File('$audio.asr.wav');
     final callback = NativeCallable<Void Function(Int32)>.listener(
       (int value) => onProgress(value / 100),
