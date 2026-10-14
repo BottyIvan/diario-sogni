@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.dependency 'Flutter'
   s.frameworks = 'AVFoundation', 'UIKit', 'UniformTypeIdentifiers'
   s.libraries = 'c++'
+  s.resource_bundles = { 'DreamNative_Privacy' => ['ios/Native/PrivacyInfo.xcprivacy'] }
   s.source_files = [
     'ios/Native/*.swift',
     'ios/NativeSource/*.{c,cpp}',

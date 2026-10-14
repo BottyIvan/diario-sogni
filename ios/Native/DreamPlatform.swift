@@ -5,10 +5,12 @@ import UniformTypeIdentifiers
 
 /// Native operations use the application container and the user-selected folder only.
 public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDelegate {
-    private let worker = DispatchQueue(label: "it.diariosogni.files", qos: .userInitiated)
+    private let worker = DispatchQueue(label: "it.diariosogni.files", qos: .utility)
+    private let audioWorker = DispatchQueue(label: "it.diariosogni.audio", qos: .userInitiated)
     private var pickerResult: FlutterResult?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     private let bookmarkKey = "dreamArchiveBookmark"
+    private let labelKey = "dreamArchiveLabel"
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = DreamPlatform()
@@ -37,7 +39,7 @@ public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDeleg
                 result(FlutterError(code: "AUDIO_PATH", message: "Percorso audio non disponibile", details: nil))
                 return
             }
-            worker.async {
+            audioWorker.async {
                 do {
                     let destination = try Self.convert(input: input, output: output)
                     DispatchQueue.main.async { result(destination) }
@@ -139,6 +141,7 @@ public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDeleg
         }
         if call.method == "disconnect" {
             UserDefaults.standard.removeObject(forKey: bookmarkKey)
+            UserDefaults.standard.removeObject(forKey: labelKey)
             result(nil)
             return
         }
@@ -147,8 +150,10 @@ public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDeleg
                 let value: Any?
                 switch call.method {
                 case "restore":
+                    // Restore preferences without contacting a cloud provider.
+                    // Access and permissions are checked during an explicit sync.
                     if UserDefaults.standard.data(forKey: self.bookmarkKey) == nil { value = nil }
-                    else { value = try self.withArchive { $0.lastPathComponent } }
+                    else { value = UserDefaults.standard.string(forKey: self.labelKey) ?? "Cartella condivisa" }
                 case "list":
                     value = try self.withArchive { folder in
                         try Self.coordinate(folder, writing: false) { location in
@@ -270,6 +275,7 @@ public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDeleg
                 let folder = try Self.archiveFolder(selected)
                 let data = try selected.bookmarkData(options: .minimalBookmark, includingResourceValuesForKeys: nil, relativeTo: nil)
                 UserDefaults.standard.set(data, forKey: self.bookmarkKey)
+                UserDefaults.standard.set(folder.lastPathComponent, forKey: self.labelKey)
                 DispatchQueue.main.async { result(folder.lastPathComponent) }
             } catch {
                 DispatchQueue.main.async {
