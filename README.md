@@ -1,5 +1,9 @@
 # Diario dei sogni — versione di prova 0.4.1
 
+Il codice è pubblico e disponibile con licenza MIT. Il primo APK Android firmato è preparato in una **Release in bozza**, non ancora disponibile come download pubblico: occorre completare la verifica dei sorgenti del componente nativo FFmpeg indicata in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). La bozza serve alle prove personali del titolare del repository. La distribuzione PC autonoma resta da preparare; il launcher incluso usa gli strumenti già disponibili sul PC di sviluppo.
+
+Per installare su un altro telefono senza USB consulta la [guida Android](docs/installazione-android.md). Le informazioni per conservare la chiave e firmare gli aggiornamenti sono in [firma Android](docs/firma-android.md). Nessuna chiave privata, registrazione o credenziale è inclusa nel repository.
+
 App Flutter per Android e browser. Questa fase implementa registrazione e archivio locali e trascrizione locale Android, con riconoscimento automatico della lingua e servizio per l’elaborazione in background; l’analisi completa si trova nella cartella docs.
 
 ## Disponibile
