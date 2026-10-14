@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.libraries = 'c++'
   s.source_files = [
     'ios/Native/*.swift',
+    'ios/NativeSource/*.{c,cpp}',
     'vendor/whisper-native/main.{cpp,h}',
     'vendor/whisper-native/whisper.cpp/include/*.h',
     'vendor/whisper-native/whisper.cpp/src/*.{cpp,h}',
@@ -22,6 +23,13 @@ Pod::Spec.new do |s|
     'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/*.{c,cpp,h}',
     'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/{arm,x86}/*.{c,cpp,h}',
     'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/amx/*.{cpp,h}'
+  ]
+  # Xcode's object basenames collide for the generic, ARM and x86 kernels.
+  # Unique wrappers include the untouched upstream files as separate units.
+  s.exclude_files = [
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/quants.c',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/repack.cpp',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/{arm,x86}/{quants.c,repack.cpp,cpu-feats.cpp}'
   ]
   s.public_header_files = 'vendor/whisper-native/main.h'
   s.header_mappings_dir = 'vendor/whisper-native'
