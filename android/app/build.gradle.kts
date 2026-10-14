@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "it.diariosogni.diario_sogni"
+        applicationId = providers.gradleProperty("diarioApplicationId").getOrElse("it.diariosogni.diario_sogni")
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24
@@ -35,6 +35,12 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        ndk { abiFilters.add("arm64-v8a") }
+        externalNativeBuild {
+            cmake {
+                arguments += listOf("-DANDROID_STL=c++_static", "-DCMAKE_BUILD_TYPE=Release")
+            }
+        }
     }
 
     signingConfigs {
@@ -53,6 +59,12 @@ android {
             signingConfig = signingConfigs.findByName("release")
         }
     }
+    externalNativeBuild {
+        cmake {
+            path = file("../../vendor/whisper-native/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
 }
 
 // A release must never silently fall back to the development certificate.
@@ -64,10 +76,6 @@ kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
-}
-
-dependencies {
-    implementation("com.antonkarpenko:ffmpeg-kit-min:1.0.3")
 }
 
 flutter {

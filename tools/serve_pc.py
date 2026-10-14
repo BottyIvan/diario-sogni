@@ -9,7 +9,7 @@ APP = Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/_diario_health':
-            data = json.dumps({'app': 'diario-sogni', 'version': '0.4.1'}).encode()
+            data = json.dumps({'app': 'diario-sogni', 'version': '0.4.2'}).encode()
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', str(len(data)))

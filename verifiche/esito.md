@@ -52,3 +52,12 @@ Ripristinato il flusso registrazione → riepilogo del singolo sogno → Salva s
 - Ascolto sul telefono, pausa/ripresa reale, ritorno da blocco schermo e persistenza sul telefono dopo arresto/riavvio restano da verificare nell’uso reale.
 
 Trascrizione automatica, riepiloghi, esportazione e sincronizzazione non fanno parte di questa prima implementazione. Non considerare questo esito come collaudo della versione completa descritta nell’analisi.
+
+## Verifica della distribuzione 0.4.2 — 14 ottobre 2026
+
+- Il convertitore usa Android MediaExtractor/MediaCodec; nessuna libreria FFmpeg è presente nel nuovo APK. Il motore Whisper viene compilato dai sorgenti CPU inclusi nel repository.
+- App di prova con identificativo separato sul OnePlus: archivio e audio dell'app dell'utente non modificati.
+- Due audio WAV sintetici completati in 54.279 secondi, con schermo spento e servizio poi arrestato.
+- Seconda prova con contenuti AAC/M4A e Opus/WebM sintetici: entrambe le trascrizioni completate in background in 53.736 secondi, inglese incluso. La breve frase inglese nell'audio misto resta omessa: il controllo di qualità misto continua a essere negativo, distinto dal corretto completamento del convertitore e del servizio.
+- APK release ARM64 firmato con chiave dedicata SboMusic. Controllo tools/audit_release.py: nessun percorso personale Windows/macOS/Linux rilevato e nessuna libreria FFmpeg. Licenze native incluse come asset; simboli e chiave esclusi da Git.
+- Il prototipo USB esistente resta installato con la firma di sviluppo. La nuova firma pubblica serve per installazioni su altri telefoni e non può aggiornare direttamente il prototipo.

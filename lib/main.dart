@@ -1131,7 +1131,7 @@ class SettingsPage extends StatelessWidget {
       ),
       const SizedBox(height: 16),
       const Text(
-        'Versione di prova 0.4.1 · Nessun promemoria',
+        'Versione di prova 0.4.2 · Nessun promemoria',
         style: TextStyle(color: plum),
       ),
     ],

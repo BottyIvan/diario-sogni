@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:crypto/crypto.dart';
-import 'package:whisper_ggml/whisper_ggml.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'transcriber_port.dart';
 import 'whisper_request.dart';
@@ -42,15 +42,16 @@ class LocalWhisperTranscriber implements TranscriberPort {
       'ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb';
   static const vadHash =
       '29940d98d42b91fbd05ce489f3ecf7c72f0a42f027e4875919a28fb4c04ea2cf';
-  final _whisper = WhisperController();
   @override
   bool get supported => Platform.isAndroid;
   Future<String> _vadPath() async =>
-      '${await WhisperController.getModelDir()}/ggml-silero-v5.1.2.bin';
+      '${(await getApplicationSupportDirectory()).path}/ggml-silero-v5.1.2.bin';
+  Future<String> _modelPath() async =>
+      '${(await getApplicationSupportDirectory()).path}/ggml-small.bin';
   @override
   Future<bool> isReady() async {
     if (!supported) return false;
-    final model = File(await _whisper.getPath(WhisperModel.small));
+    final model = File(await _modelPath());
     final vad = File(await _vadPath());
     return await model.exists() &&
         await model.length() == modelSize &&
@@ -63,7 +64,7 @@ class LocalWhisperTranscriber implements TranscriberPort {
   Future<void> download(void Function(double) onProgress) async {
     if (!supported) throw UnsupportedError('Solo Android');
     // The wrapper expects this filename; the verified contents are small Q5_1.
-    final modelPath = await _whisper.getPath(WhisperModel.small);
+    final modelPath = await _modelPath();
     await Directory(File(modelPath).parent.path).create(recursive: true);
     await _downloadVerified(
       Uri.parse(
@@ -157,7 +158,7 @@ class LocalWhisperTranscriber implements TranscriberPort {
       final request = jsonEncode(
         whisperRequest(
           audio: converted.path,
-          model: await _whisper.getPath(WhisperModel.small),
+          model: await _modelPath(),
           vadModel: await _vadPath(),
           progressCallback: callback.nativeFunction.address,
         ),
