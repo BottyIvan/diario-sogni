@@ -94,7 +94,7 @@ public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDeleg
                 let frames = AVAudioFrameCount(min(remaining, AVAudioFramePosition(max(1, requested))))
                 guard let chunk = AVAudioPCMBuffer(pcmFormat: reader.processingFormat, frameCapacity: frames) else {
                     readError = NativeError.unsupportedAudio
-                    state.pointee = .noData
+                    state.pointee = .noDataNow
                     return nil
                 }
                 do {
@@ -103,7 +103,7 @@ public final class DreamPlatform: NSObject, FlutterPlugin, UIDocumentPickerDeleg
                     return chunk.frameLength == 0 ? nil : chunk
                 } catch {
                     readError = error
-                    state.pointee = .noData
+                    state.pointee = .noDataNow
                     return nil
                 }
             }

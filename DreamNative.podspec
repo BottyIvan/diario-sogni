@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
     'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/amx/*.{cpp,h}'
   ]
   s.public_header_files = 'vendor/whisper-native/main.h'
+  s.header_mappings_dir = 'vendor/whisper-native'
   s.preserve_paths = 'vendor/whisper-native/**/*', 'licenses/*', 'THIRD_PARTY_NOTICES.md'
   s.pod_target_xcconfig = {
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++17',

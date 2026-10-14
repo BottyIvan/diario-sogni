@@ -2,7 +2,7 @@
 
 La licenza MIT del progetto riguarda il codice di Diario dei sogni. I componenti esterni mantengono le proprie licenze e attribuzioni. pubspec.lock documenta le versioni Flutter e Dart, i cui avvisi sono raccolti nell'asset Flutter NOTICES.Z.
 
-La versione 0.4.2 decodifica gli audio mediante MediaExtractor e MediaCodec Android. Non include FFmpeg, FFmpeg Kit o il plugin Flutter whisper_ggml. Il motore CPU viene compilato dai sorgenti presenti in vendor/whisper-native, con le attribuzioni originali conservate.
+La versione Android 0.4.2 decodifica gli audio mediante MediaExtractor e MediaCodec. Il progetto iOS preliminare usa AVFoundation. Non includono FFmpeg, FFmpeg Kit o il plugin Flutter whisper_ggml. Il motore CPU viene compilato dai sorgenti presenti in vendor/whisper-native, con le attribuzioni originali conservate: CMake per Android, DreamNative.podspec per Apple.
 
 | Componente | Provenienza | Licenza |
 | --- | --- | --- |
