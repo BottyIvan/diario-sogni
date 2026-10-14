@@ -61,3 +61,15 @@ Trascrizione automatica, riepiloghi, esportazione e sincronizzazione non fanno p
 - Seconda prova con contenuti AAC/M4A e Opus/WebM sintetici: entrambe le trascrizioni completate in background in 53.736 secondi, inglese incluso. La breve frase inglese nell'audio misto resta omessa: il controllo di qualità misto continua a essere negativo, distinto dal corretto completamento del convertitore e del servizio.
 - APK release ARM64 firmato con chiave dedicata SboMusic. Controllo tools/audit_release.py: nessun percorso personale Windows/macOS/Linux rilevato e nessuna libreria FFmpeg. Licenze native incluse come asset; simboli e chiave esclusi da Git.
 - Il prototipo USB esistente resta installato con la firma di sviluppo. La nuova firma pubblica serve per installazioni su altri telefoni e non può aggiornare direttamente il prototipo.
+
+## Verifica iOS preliminare — 14 ottobre 2026
+
+- Progetto iOS aggiunto, con minimo iOS 15, Flutter 3.47.7 e CocoaPods. CPU Whisper compilata dagli stessi sorgenti di Android, con unità dai nomi distinti per il collegamento Xcode.
+- Controllo finale macOS 15 / Xcode 26.3 superato su GitHub: https://github.com/SboMusic/diario-sogni/actions/runs/38584268550 (codice 03d8a6a).
+- Analisi Dart senza problemi e 21 test comuni superati, inclusi il recupero degli audio dopo lo spostamento del contenitore iOS e il rifiuto di percorsi non validi.
+- Quattro XCTest superati: conversione AAC in WAV; conversione PCM stereo 48 kHz in mono PCM16 16 kHz; rifiuto di input fuori dal contenitore; esportazione e chiamata del simbolo request con risposta JSON valida.
+- Compilazione simulatore debug e compilazione iPhone release senza firma superate. Questi controlli non sono un collaudo di registrazione dal microfono, inferenza del modello o provider cloud su un iPhone reale.
+- Ripristino del collegamento tramite preferenze locali, senza contattare il cloud all'avvio. Conversione audio su coda indipendente dalle operazioni del provider di file.
+- Nuovi percorsi audio iOS relativi a Documents; lettura compatibile dei precedenti percorsi assoluti. Android continua a compilare in debug senza installazioni o modifiche ai dati del telefono.
+- Il background iOS usa beginBackgroundTask: tempo limitato dal sistema; audio salvato e trascrizione riprovabile. Nessuna garanzia di elaborazione dopo arresto forzato o riavvio.
+- Dati Apple privati e materiale di firma esclusi dal repository. Release iOS dedicata ai sorgenti per revisione, non a un installer firmato.

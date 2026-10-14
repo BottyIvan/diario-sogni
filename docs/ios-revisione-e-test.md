@@ -2,6 +2,10 @@
 
 Questa è una versione iOS preliminare dello stesso progetto Flutter. La Release iOS contiene i sorgenti, non un'app firmata installabile con un tocco. La Release Android rimane separata e utilizzabile.
 
+## Stato verificato
+
+Il [controllo macOS/Xcode](https://github.com/SboMusic/diario-sogni/actions/runs/38584268550) ha superato analisi, 21 test Dart, 4 test nativi, compilazione simulatore e compilazione iPhone senza firma. Minimo iOS 15. Le prove reali sul telefono elencate sotto restano necessarie: i test nativi non eseguono la trascrizione con il modello né verificano un servizio cloud.
+
 ## Scaricare dal proprio PC
 
 Aprire https://github.com/SboMusic/diario-sogni e scegliere Code → Download ZIP, oppure scaricare Source code (zip) dalla Release iOS. Estrarre la cartella e aprirla con VS Code. Questi passaggi funzionano anche su Windows: servono per leggere e modificare i file, non per installare l'app su iPhone.

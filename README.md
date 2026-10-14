@@ -8,7 +8,7 @@ App Flutter per Android e browser. Questa fase implementa registrazione e archiv
 
 ## Versione iPhone preliminare
 
-Il progetto iOS è incluso per revisione e prove. Vedi la [guida iPhone](docs/ios-revisione-e-test.md): descrive compilazione su GitHub/macOS, firma e test sul dispositivo. Il supporto Apple non è ancora collaudato su un iPhone reale; il tempo di trascrizione in background è limitato da iOS. Il file non firmato non si installa direttamente come un APK. Le Release iOS sono separate da quelle Android.
+Il progetto iOS è incluso per revisione e prove: [scarica i sorgenti dalla Release iOS](https://github.com/SboMusic/diario-sogni/releases/tag/v0.4.2-ios-preview). Compilazione macOS e test nativi superati. Vedi la [guida iPhone](docs/ios-revisione-e-test.md): descrive compilazione su GitHub/macOS, firma e test sul dispositivo. Il supporto Apple non è ancora collaudato su un iPhone reale; il tempo di trascrizione in background è limitato da iOS. Il file non firmato non si installa direttamente come un APK. Le Release iOS sono separate da quelle Android.
 
 ## Disponibile
 
