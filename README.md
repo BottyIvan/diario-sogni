@@ -6,6 +6,10 @@ Per installare su un altro telefono senza USB consulta la [guida Android](docs/i
 
 App Flutter per Android e browser. Questa fase implementa registrazione e archivio locali e trascrizione locale Android, con riconoscimento automatico della lingua e servizio per l’elaborazione in background; l’analisi completa si trova nella cartella docs.
 
+## Versione iPhone preliminare
+
+Il progetto iOS è incluso per revisione e prove. Vedi la [guida iPhone](docs/ios-revisione-e-test.md): descrive compilazione su GitHub/macOS, firma e test sul dispositivo. Il supporto Apple non è ancora collaudato su un iPhone reale; il tempo di trascrizione in background è limitato da iOS. Il file non firmato non si installa direttamente come un APK. Le Release iOS sono separate da quelle Android.
+
 ## Disponibile
 
 - Registrazione audio locale, pausa, ripresa e salvataggio con data e ora di inizio.

@@ -17,7 +17,10 @@ Map<String, dynamic> invokeWhisper(String requestJson) {
   final input = requestJson.toNativeUtf8();
   Pointer<Utf8>? output;
   try {
-    final request = DynamicLibrary.open('libwhisper.so')
+    final library = Platform.isIOS
+        ? DynamicLibrary.process()
+        : DynamicLibrary.open('libwhisper.so');
+    final request = library
         .lookupFunction<
           Pointer<Utf8> Function(Pointer<Utf8>),
           Pointer<Utf8> Function(Pointer<Utf8>)
@@ -43,7 +46,7 @@ class LocalWhisperTranscriber implements TranscriberPort {
   static const vadHash =
       '29940d98d42b91fbd05ce489f3ecf7c72f0a42f027e4875919a28fb4c04ea2cf';
   @override
-  bool get supported => Platform.isAndroid;
+  bool get supported => Platform.isAndroid || Platform.isIOS;
   Future<String> _vadPath() async =>
       '${(await getApplicationSupportDirectory()).path}/ggml-silero-v5.1.2.bin';
   Future<String> _modelPath() async =>
@@ -62,7 +65,7 @@ class LocalWhisperTranscriber implements TranscriberPort {
 
   @override
   Future<void> download(void Function(double) onProgress) async {
-    if (!supported) throw UnsupportedError('Solo Android');
+    if (!supported) throw UnsupportedError('Richiede Android o iPhone');
     // The wrapper expects this filename; the verified contents are small Q5_1.
     final modelPath = await _modelPath();
     await Directory(File(modelPath).parent.path).create(recursive: true);

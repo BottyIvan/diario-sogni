@@ -1,0 +1,60 @@
+name: Verifica iPhone
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['ios/**', 'lib/**', 'vendor/**', 'DreamNative.podspec', 'pubspec.*', '.github/workflows/ios-check.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Prepara Flutter 3.47.7
+        run: |
+          git clone --depth 1 --branch 3.47.7 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Prepara progetto in un percorso senza dati personali
+        run: |
+          mkdir -p /tmp/diario-ios
+          rsync -a --exclude=.git --exclude=.private --exclude=build --exclude=.dart_tool "$GITHUB_WORKSPACE/" /tmp/diario-ios/
+          flutter precache --ios
+          cd /tmp/diario-ios
+          flutter pub get
+          flutter analyze
+          flutter test
+      - name: Compila per il simulatore
+        working-directory: /tmp/diario-ios
+        run: flutter build ios --simulator --debug
+      - name: Prova convertitore e collegamento nativo su simulatore
+        working-directory: /tmp/diario-ios
+        run: |
+          DEVICE=$(xcrun simctl list devices available --json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(v["udid"] for k,vs in d["devices"].items() if "iOS" in k for v in vs if "iPhone" in v["name"]))')
+          xcrun simctl boot "$DEVICE" || true
+          xcrun simctl bootstatus "$DEVICE" -b
+          xcodebuild test -workspace ios/Runner.xcworkspace -scheme Runner -destination "platform=iOS Simulator,id=$DEVICE" -only-testing:RunnerTests CODE_SIGNING_ALLOWED=NO -quiet
+      - name: Compila per iPhone senza firma privata
+        working-directory: /tmp/diario-ios
+        run: flutter build ios --release --no-codesign --obfuscate --split-debug-info="$RUNNER_TEMP/ios-symbols" --extra-gen-snapshot-options=--strip
+      - name: Prepara risultato non installabile direttamente
+        working-directory: /tmp/diario-ios
+        run: |
+          mkdir -p /tmp/ios-result
+          ditto -c -k --sequesterRsrc --keepParent build/ios/iphoneos/Runner.app /tmp/ios-result/DiarioSogni-iOS-NON-FIRMATO.zip
+          cp docs/ios-revisione-e-test.md /tmp/ios-result/LEGGIMI.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iOS-compilazione-non-firmata
+          path: /tmp/ios-result/
+          retention-days: 7

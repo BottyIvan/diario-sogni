@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'transcription_manager.dart';
@@ -39,7 +40,7 @@ class TranscriptionCard extends StatelessWidget {
               const SizedBox(height: 10),
               if (!manager.engine.supported)
                 const Text(
-                  'La trascrizione locale è disponibile per ora su Android. Nel browser puoi scrivere e cercare il testo del sogno.',
+                  'La trascrizione locale è disponibile su Android e nella versione iPhone. Nel browser puoi scrivere e cercare il testo del sogno.',
                 )
               else if (manager.downloading) ...[
                 Text(
@@ -76,8 +77,10 @@ class TranscriptionCard extends StatelessWidget {
                       : null,
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Puoi salvare, usare un’altra app o spegnere lo schermo. La trascrizione continua sul dispositivo.',
+                Text(
+                  !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS
+                      ? 'Puoi salvare e tornare alla home. Su iPhone mantieni l’app aperta fino al termine: iOS può sospendere la trascrizione quando cambi app o spegni lo schermo.'
+                      : 'Puoi salvare, usare un’altra app o spegnere lo schermo. La trascrizione continua sul dispositivo.',
                 ),
               ] else if (stage == TranscriptionStage.failed) ...[
                 const Text(

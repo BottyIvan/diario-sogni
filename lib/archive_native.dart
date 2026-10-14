@@ -9,7 +9,7 @@ ArchivePort createArchivePort() => AndroidArchivePort();
 class AndroidArchivePort implements ArchivePort {
   static const _channel = MethodChannel('it.diariosogni/archive');
   @override
-  bool get supported => Platform.isAndroid;
+  bool get supported => Platform.isAndroid || Platform.isIOS;
   @override
   Future<String?> restore() async =>
       supported ? await _channel.invokeMethod<String>('restore') : null;
