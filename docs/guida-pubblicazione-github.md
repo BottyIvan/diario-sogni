@@ -44,8 +44,8 @@ Riferimenti: [gestione delle Releases GitHub](https://docs.github.com/en/reposit
 La landing è in `docs/index.html`, nella cartella già usata per le guide. Per pubblicarla:
 
 1. Apri **Settings → Pages** nel repository GitHub.
-2. In **Build and deployment**, scegli **Deploy from a branch**.
-3. Seleziona il branch `main` e la cartella `/docs`, quindi premi **Save**.
+2. In **Build and deployment**, scegli **GitHub Actions**.
+3. Il deployment avverrà automaticamente tramite il file di workflow presente nel repository ad ogni push sul branch main.
 4. Attendi il completamento della pubblicazione: l’indirizzo del sito compare nella stessa sezione **Pages**.
 
 Le modifiche successive alla landing vengono pubblicate da GitHub Pages dopo il push sul branch `main`.
