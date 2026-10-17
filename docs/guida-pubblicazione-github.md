@@ -38,3 +38,14 @@ Per una prova privata prima della pubblicazione puoi trasferire sul telefono l�
 Pubblicheremo una nuova release e un nuovo APK, con numero di versione superiore e la stessa firma. L’utente scaricherà e installerà l’aggiornamento sopra la versione precedente. Gli aggiornamenti automatici dall’interno dell’app non sono ancora implementati.
 
 Riferimenti: [gestione delle Releases GitHub](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository), [compilazione e firma Android con Flutter](https://docs.flutter.dev/deployment/android), [distribuzione Android al di fuori del Play Store](https://developer.android.com/distribute/marketing-tools/alternative-distribution).
+
+## Pubblicare la landing con GitHub Pages
+
+La landing è in `docs/index.html`, nella cartella già usata per le guide. Per pubblicarla:
+
+1. Apri **Settings → Pages** nel repository GitHub.
+2. In **Build and deployment**, scegli **Deploy from a branch**.
+3. Seleziona il branch `main` e la cartella `/docs`, quindi premi **Save**.
+4. Attendi il completamento della pubblicazione: l’indirizzo del sito compare nella stessa sezione **Pages**.
+
+Le modifiche successive alla landing vengono pubblicate da GitHub Pages dopo il push sul branch `main`.

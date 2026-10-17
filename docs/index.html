@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17132b">
+  <meta name="description" content="Diario dei sogni: registra i tuoi sogni, ritrovali nel tuo archivio privato e trascrivili sul telefono.">
+  <meta property="og:title" content="Diario dei sogni">
+  <meta property="og:description" content="Un posto tutto tuo per ricordare i sogni, dal primo racconto alla trascrizione.">
+  <meta property="og:type" content="website">
+  <title>Diario dei sogni — Dai voce ai tuoi sogni</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #201c32;
+      --muted: #69657a;
+      --paper: #fbf9f5;
+      --violet: #7256d8;
+      --violet-dark: #5940b6;
+      --line: #e9e4ef;
+      --serif: Georgia, "Times New Roman", serif;
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); }
+    a { color: inherit; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 76% 26%, #51407e 0, transparent 34%),
+        linear-gradient(125deg, #17132b 5%, #27203d 58%, #302347);
+    }
+
+    .hero::after {
+      position: absolute;
+      right: -8rem;
+      bottom: -17rem;
+      width: 44rem;
+      height: 32rem;
+      border: 1px solid rgb(255 255 255 / 10%);
+      border-radius: 50%;
+      content: "";
+      transform: rotate(-26deg);
+      pointer-events: none;
+    }
+
+    .wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+
+    .nav {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 82px;
+      border-bottom: 1px solid rgb(255 255 255 / 12%);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgb(255 255 255 / 25%);
+      border-radius: 13px;
+      color: #e9dfff;
+      background: rgb(255 255 255 / 9%);
+      font-family: var(--serif);
+      font-size: 22px;
+    }
+
+    .nav a:not(.brand) {
+      color: #e5dff1;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .nav a:not(.brand):hover { color: #fff; }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 64px;
+      min-height: 560px;
+      padding: 76px 0 92px;
+    }
+
+    .eyebrow {
+      margin: 0 0 20px;
+      color: #c6b8f6;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 650px;
+      margin-bottom: 22px;
+      font-family: var(--serif);
+      font-size: clamp(46px, 6vw, 76px);
+      font-weight: 400;
+      letter-spacing: -.045em;
+      line-height: 1.04;
+    }
+
+    .hero-copy {
+      max-width: 510px;
+      margin-bottom: 32px;
+      color: #d4cfe0;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 20px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #211a37; background: #e7dcff; }
+    .button-primary:hover { background: #f0eaff; }
+    .button-quiet { border-color: rgb(255 255 255 / 25%); color: #fff; }
+    .button-quiet:hover { background: rgb(255 255 255 / 8%); }
+    .button-arrow { font-size: 17px; }
+
+    .dream-card {
+      position: relative;
+      width: min(100%, 370px);
+      justify-self: center;
+      padding: 27px;
+      border: 1px solid rgb(255 255 255 / 20%);
+      border-radius: 25px;
+      background: linear-gradient(145deg, rgb(255 255 255 / 14%), rgb(255 255 255 / 6%));
+      box-shadow: 0 30px 90px rgb(5 3 15 / 28%);
+      transform: rotate(2deg);
+    }
+
+    .card-top { display: flex; justify-content: space-between; color: #c8bfdc; font-size: 12px; }
+    .moon { color: #f1d892; font-size: 17px; }
+    .dream-card h2 { margin: 30px 0 8px; font-family: var(--serif); font-size: 29px; font-weight: 400; }
+    .dream-card p { margin: 0; color: #c8bfdc; font-size: 13px; }
+    .wave {
+      display: flex;
+      height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      margin: 26px 0 17px;
+    }
+    .wave span {
+      width: 4px;
+      height: var(--height);
+      border-radius: 5px;
+      background: linear-gradient(#d7c7ff, #967ee8);
+      opacity: .9;
+    }
+    .recording { display: flex; align-items: center; gap: 8px; color: #e6def5; font-size: 12px; }
+    .recording::before { width: 7px; height: 7px; border-radius: 50%; background: #eaa0af; content: ""; }
+
+    main { padding: 92px 0 84px; }
+    .intro { max-width: 640px; margin-bottom: 48px; }
+    .section-label {
+      margin-bottom: 13px;
+      color: var(--violet-dark);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    h2.section-title {
+      margin-bottom: 16px;
+      font-family: var(--serif);
+      font-size: clamp(34px, 4vw, 48px);
+      font-weight: 400;
+      letter-spacing: -.035em;
+      line-height: 1.12;
+    }
+    .intro > p:last-child { margin-bottom: 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .feature {
+      min-height: 208px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+    .feature-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 25px;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--violet-dark);
+      background: #f0ebff;
+      font-size: 19px;
+    }
+    .feature h3 { margin-bottom: 9px; font-family: var(--serif); font-size: 21px; font-weight: 400; }
+    .feature p { margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+    .privacy {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      margin-top: 72px;
+      padding: 34px 38px;
+      border: 1px solid #e8e1f5;
+      border-radius: 20px;
+      background: #f4f0fb;
+    }
+    .privacy h2 { margin-bottom: 8px; font-family: var(--serif); font-size: 26px; font-weight: 400; }
+    .privacy p { max-width: 620px; margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .privacy-mark { color: var(--violet); font-size: 36px; }
+
+    .download {
+      margin-top: 76px;
+      padding: 50px;
+      border-radius: 22px;
+      color: #fff;
+      background: #211b35;
+    }
+    .download-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .download h2 { margin-bottom: 10px; font-family: var(--serif); font-size: 32px; font-weight: 400; }
+    .download p { margin-bottom: 0; color: #c8c1d5; font-size: 14px; line-height: 1.65; }
+    .download .button { flex: 0 0 auto; color: #211a37; background: #e7dcff; }
+    .download .button:hover { background: #f0eaff; }
+
+    footer { padding: 26px 0 34px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    footer p, footer a { margin: 0; color: var(--muted); font-size: 12px; }
+    footer a:hover { color: var(--ink); }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .nav { min-height: 70px; }
+      .hero-content { grid-template-columns: 1fr; gap: 44px; min-height: 0; padding: 70px 0 74px; }
+      .hero-copy { font-size: 16px; }
+      .dream-card { justify-self: start; }
+      main { padding: 70px 0; }
+      .features { grid-template-columns: 1fr; }
+      .feature { min-height: 0; }
+      .feature-icon { margin-bottom: 19px; }
+      .privacy { grid-template-columns: 1fr; gap: 16px; padding: 26px; }
+      .privacy-mark { display: none; }
+      .download { margin-top: 56px; padding: 30px 25px; }
+      .download-inner { align-items: flex-start; flex-direction: column; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav wrap" aria-label="Navigazione principale">
+      <a class="brand" href="#inizio" aria-label="Diario dei sogni, inizio">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>Diario dei sogni</span>
+      </a>
+      <a href="https://github.com/BottyIvan/diario-sogni">Il progetto su GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="hero-content wrap" id="inizio">
+      <div>
+        <p class="eyebrow">Un piccolo spazio per te</p>
+        <h1>Non lasciare svanire i sogni.</h1>
+        <p class="hero-copy">Al risveglio, raccontali a voce. Diario dei sogni li conserva nel tuo archivio personale, così puoi riascoltarli e ritrovarli quando vuoi.</p>
+        <div class="actions">
+          <a class="button button-primary" href="https://github.com/SboMusic/diario-sogni/releases/tag/v0.4.2">
+            Prova l’app Android <span class="button-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="button button-quiet" href="#come-funziona">Scopri come funziona</a>
+        </div>
+      </div>
+      <aside class="dream-card" aria-label="Anteprima di un sogno registrato">
+        <div class="card-top"><span>IL TUO ARCHIVIO</span><span class="moon" aria-hidden="true">☾</span></div>
+        <h2>Un giardino di notte</h2>
+        <p>Oggi, appena sveglio</p>
+        <div class="wave" aria-hidden="true">
+          <span style="--height: 24%"></span><span style="--height: 42%"></span><span style="--height: 31%"></span>
+          <span style="--height: 70%"></span><span style="--height: 49%"></span><span style="--height: 86%"></span>
+          <span style="--height: 39%"></span><span style="--height: 62%"></span><span style="--height: 100%"></span>
+          <span style="--height: 54%"></span><span style="--height: 76%"></span><span style="--height: 43%"></span>
+          <span style="--height: 90%"></span><span style="--height: 33%"></span><span style="--height: 59%"></span>
+          <span style="--height: 80%"></span><span style="--height: 46%"></span><span style="--height: 27%"></span>
+          <span style="--height: 67%"></span><span style="--height: 35%"></span><span style="--height: 52%"></span>
+          <span style="--height: 74%"></span><span style="--height: 38%"></span><span style="--height: 23%"></span>
+        </div>
+        <div class="recording">Ricordo vocale · 01:24</div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="wrap" id="come-funziona">
+    <section aria-labelledby="momenti">
+      <div class="intro">
+        <p class="section-label">Dai voce ai tuoi ricordi</p>
+        <h2 class="section-title" id="momenti">Dal risveglio al tuo diario, con semplicità.</h2>
+        <p>Registra quello che ricordi, aggiungi un titolo o le tue parole e ritrova ogni sogno nel tempo. L’app è in evoluzione: la versione attuale è una prova gratuita.</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">◖</div>
+          <h3>Racconta, non scrivere</h3>
+          <p>Registra un audio appena sveglio e aggiungi dettagli o correzioni quando vuoi.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">⌕</div>
+          <h3>Ritrova i tuoi sogni</h3>
+          <p>Riascolta le registrazioni, consulta le trascrizioni e cerca nell’archivio.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon" aria-hidden="true">⌂</div>
+          <h3>Le tue copie, sotto controllo</h3>
+          <p>Nessun account obbligatorio. Archivio locale e sincronizzazione manuale facoltativa.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="privacy" aria-labelledby="privacy-title">
+      <div>
+        <h2 id="privacy-title">I tuoi sogni restano tuoi.</h2>
+        <p>Le registrazioni vengono conservate localmente. La trascrizione automatica è disponibile su Android dopo aver scaricato il modello; non invia l’audio a un servizio IA.</p>
+      </div>
+      <span class="privacy-mark" aria-hidden="true">✧</span>
+    </section>
+
+    <section class="download" aria-labelledby="download-title">
+      <div class="download-inner">
+        <div>
+          <h2 id="download-title">Inizia a ricordare.</h2>
+          <p>Versione Android di prova 0.4.2. Per installazione, limiti e informazioni aggiornate, consulta la release e la guida.</p>
+        </div>
+        <a class="button" href="https://github.com/SboMusic/diario-sogni/releases/tag/v0.4.2">
+          Vai alla release <span class="button-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner wrap">
+      <p>Diario dei sogni · Progetto gratuito e open source</p>
+      <p><a href="installazione-android.md">Guida all’installazione</a> · <a href="https://github.com/BottyIvan/diario-sogni">Codice sorgente</a></p>
+    </div>
+  </footer>
+</body>
+</html>
