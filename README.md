@@ -4,11 +4,13 @@ Il codice è pubblico e gratuito con licenza MIT. Il pacchetto Android gratuito 
 
 Per installare su un altro telefono senza USB consulta la [guida Android](docs/installazione-android.md). Le informazioni per conservare la chiave e firmare gli aggiornamenti sono in [firma Android](docs/firma-android.md). Nessuna chiave privata, registrazione o credenziale è inclusa nel repository.
 
+Il [portale delle guide](https://bottyivan.github.io/diario-sogni/) raccoglie le istruzioni per installare e usare l’app, oltre alla documentazione del progetto.
+
 App Flutter per Android e browser. Questa fase implementa registrazione e archivio locali e trascrizione locale Android, con riconoscimento automatico della lingua e servizio per l’elaborazione in background; l’analisi completa si trova nella cartella docs.
 
-## Versione iPhone preliminare
+## Installazione su iPhone
 
-Il progetto iOS è incluso per revisione e prove: [scarica i sorgenti dalla Release iOS](https://github.com/SboMusic/diario-sogni/releases/tag/v0.4.2-ios-preview). Compilazione macOS e test nativi superati. Vedi la [guida iPhone](docs/ios-revisione-e-test.md): descrive compilazione su GitHub/macOS, firma e test sul dispositivo. Il supporto Apple non è ancora collaudato su un iPhone reale; il tempo di trascrizione in background è limitato da iOS. Il file non firmato non si installa direttamente come un APK. Le Release iOS sono separate da quelle Android.
+La versione iOS è stata provata su un iPhone e viene distribuita come IPA firmato, installabile via OTA da Safari. Per motivi di firma Apple, l’installazione è possibile solo sugli iPhone registrati nel profilo Ad Hoc della release; non è un’app App Store né un download aperto a qualsiasi dispositivo. Segui la [guida passo passo per iPhone](docs/ios-revisione-e-test.md). Il progetto include anche una [release con i sorgenti iOS](https://github.com/SboMusic/diario-sogni/releases/tag/v0.4.2-ios-preview).
 
 ## Disponibile
 
