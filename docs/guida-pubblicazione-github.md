@@ -12,13 +12,11 @@ Una volta noto l’indirizzo del repository, colleghiamo il progetto locale con 
 
 Il caricamento avviene tramite Git, non trascinando tutta la cartella nel sito: Git rispetta il .gitignore, conserva le versioni e permette di pubblicare gli aggiornamenti. Prima del primo invio verifichiamo l’elenco dei file inclusi.
 
-## Terzo passo: pubblicare una versione scaricabile
+## Terzo passo: pubblicare una versione
 
-Nel repository apri **Releases → Draft a new release**. Associa una versione al codice, scegli un titolo e descrivi quali funzioni sono disponibili. Allega il file APK preparato per quella versione, quindi pubblica la release. Un repository pubblico permette agli utenti di scaricare il pacchetto senza accedere al tuo account.
+Prima di creare una release, aggiorna il numero di versione in `pubspec.yaml` e invia la modifica sul repository. Nel repository apri **Releases → Draft a new release**, scegli il tag che identifica quel commit, un titolo e descrivi quali funzioni sono disponibili. Alla pubblicazione della release, GitHub Actions compila Android e iOS e allega automaticamente i due artefatti; il numero di build viene assegnato dal workflow. Il workflow si avvia quando la release viene pubblicata, non quando è ancora una bozza; richiede che le Actions siano abilitate nel repository.
 
-Il file **Source code (zip)** contiene il codice: non installa l’app. Il file con estensione **.apk** è il pacchetto Android. La versione PC autonoma avrà un pacchetto separato, da preparare: il launcher attuale usa gli strumenti disponibili su questo PC.
-
-Prima del rilascio pubblico occorre preparare una build Android release con firma stabile, conservare privatamente la chiave e documentare licenze e dispositivi supportati. L’APK disponibile oggi è una build di prova 0.4.1, preparata per telefoni ARM64 con Android 7.0 o successivo. Non presentarlo come versione definitiva per tutti i telefoni. Cambiare firma impedisce l’aggiornamento diretto di un’app già installata con una firma diversa: le prove attuali e il passaggio alla firma definitiva vanno gestiti senza perdere l’archivio.
+Gli allegati firmati sono `DiarioSogni-Android-ARM64.apk` e `DiarioSogni-iOS.ipa` (Ad Hoc, per i dispositivi registrati nel profilo). La compilazione Android è limitata ai telefoni ARM64. Se mancano le secret di firma nel repository, la build si blocca prima di compilare e indica la guida: [configurare le secret di release](configurazione-secret-release.md). Il file **Source code (zip)** contiene invece i sorgenti. La versione PC autonoma avrà un pacchetto separato, da preparare: il launcher attuale usa gli strumenti disponibili su questo PC.
 
 ## Installazione su un altro telefono, senza cavo
 
