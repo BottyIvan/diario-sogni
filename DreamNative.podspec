@@ -13,28 +13,39 @@ Pod::Spec.new do |s|
   s.frameworks = 'AVFoundation', 'UIKit', 'UniformTypeIdentifiers'
   s.libraries = 'c++'
   s.resource_bundles = { 'DreamNative_Privacy' => ['ios/Native/PrivacyInfo.xcprivacy'] }
+  
+  # File sorgente inclusi nel target. Vengono evitati i glob di intestazione (*.h) 
+  # nelle sottocartelle annidate per prevenire conflitti di nomi e duplicazioni di UUID in Xcode.
   s.source_files = [
     'ios/Native/*.swift',
     'ios/NativeSource/*.{c,cpp}',
     'vendor/whisper-native/main.{cpp,h}',
-    'vendor/whisper-native/whisper.cpp/include/*.h',
-    'vendor/whisper-native/whisper.cpp/src/*.{cpp,h}',
-    'vendor/whisper-native/whisper.cpp/ggml/include/*.h',
-    'vendor/whisper-native/whisper.cpp/ggml/src/*.{c,cpp,h}',
-    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/*.{c,cpp,h}',
-    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/{arm,x86}/*.{c,cpp,h}',
-    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/amx/*.{cpp,h}'
+    'vendor/whisper-native/whisper.cpp/src/*.cpp',
+    'vendor/whisper-native/whisper.cpp/ggml/src/*.{c,cpp}',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/*.{c,cpp}',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/arm/*.{c,cpp}',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/x86/*.{c,cpp}',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/amx/*.cpp'
   ]
-  # Xcode's object basenames collide for the generic, ARM and x86 kernels.
-  # Unique wrappers include the untouched upstream files as separate units.
+
+  # Esclusione esplicita delle implementazioni duplicate dei kernel CPU 
+  # per evitare collisioni di oggetti durante la compilazione nativa.
   s.exclude_files = [
     'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/quants.c',
     'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/repack.cpp',
-    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/{arm,x86}/{quants.c,repack.cpp,cpu-feats.cpp}'
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/arm/quants.c',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/arm/repack.cpp',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/arm/cpu-feats.cpp',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/x86/quants.c',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/x86/repack.cpp',
+    'vendor/whisper-native/whisper.cpp/ggml/src/ggml-cpu/arch/x86/cpu-feats.cpp'
   ]
+
   s.public_header_files = 'vendor/whisper-native/main.h'
   s.header_mappings_dir = 'vendor/whisper-native'
   s.preserve_paths = 'vendor/whisper-native/**/*', 'licenses/*', 'THIRD_PARTY_NOTICES.md'
+  
+  # Configurazione dei flag di compilazione C++ e standard di preprocessore
   s.pod_target_xcconfig = {
     'CLANG_CXX_LANGUAGE_STANDARD' => 'c++17',
     'GCC_C_LANGUAGE_STANDARD' => 'gnu11',
@@ -42,6 +53,7 @@ Pod::Spec.new do |s|
     'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GGML_USE_CPU GGML_VERSION=\"1.9.1\" GGML_COMMIT=\"whisper.cpp-v1.9.1\" WHISPER_VERSION=\"1.9.1\"',
     'OTHER_CFLAGS' => '$(inherited) -ffile-prefix-map=$(PODS_TARGET_SRCROOT)=. -fmacro-prefix-map=$(PODS_TARGET_SRCROOT)=. -fdebug-prefix-map=$(PODS_TARGET_SRCROOT)=.'
   }
-  # Dart FFI resolves request() in the process; retain it during static linking.
+  
+  # Dart FFI risolve la funzione request() a livello di processo; la mantiene durante il linking statico.
   s.user_target_xcconfig = { 'OTHER_LDFLAGS' => '$(inherited) -Wl,-u,_request' }
 end
