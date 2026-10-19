@@ -31,7 +31,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
-  DreamNative: d2dd5a0c6b2a42ce29defabcf59b217f7b49b0a1
+  DreamNative: 9eebee5ca6e07b149124cf0a43d605e1d42c79f7
   Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
   just_audio: 4e391f57b79cad2b0674030a00453ca5ce817eed
   record_ios: 390a30c7caaf8b5d0fb1cb1d2fd5064b48b4520c
