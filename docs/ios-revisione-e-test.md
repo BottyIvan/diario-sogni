@@ -31,9 +31,11 @@ Riepiloghi settimanali/mensili, assistenti IA esterni, connettori OAuth e sincro
 
 La versione Apple usa i formati decodificabili da AVFoundation. Gli audio M4A di Android e iPhone sono il percorso previsto. Gli audio WebM/Opus registrati dal browser possono essere importati nell'archivio, ma ascolto e trascrizione su iPhone richiedono ancora un decoder compatibile: non è garantito il loro supporto.
 
-## Verifica gratuita sul Mac di GitHub
+## Build automatica e verifica gratuita sul Mac di GitHub
 
-Nel repository scegliere Actions → Verifica iPhone. Il controllo usa un runner macOS standard per repository pubblico, senza certificati e senza account sviluppatore Apple. Esegue analisi Dart, test comuni, compilazione per simulatore, prove native del convertitore e compilazione iPhone senza firma.
+Alla pubblicazione di una GitHub Release, il workflow `Build release artifacts` compila Android e iOS firmati e allega `DiarioSogni-iOS.ipa` e l'APK alla release. L'IPA è Ad Hoc: si installa via OTA solo sui dispositivi registrati nel profilo di provisioning. Servono le secret descritte in [configurare le secret di release](configurazione-secret-release.md); senza di esse la build si blocca. Il risultato non include credenziali Apple, certificati o simboli privati.
+
+Nel repository scegliere Actions → Verifica iPhone per le verifiche. Il controllo usa un runner macOS standard per repository pubblico, senza certificati e senza account sviluppatore Apple. Esegue analisi Dart, test comuni, compilazione per simulatore, prove native del convertitore e compilazione iPhone senza firma.
 
 Il risultato `iOS-compilazione-non-firmata` serve come controllo di compilazione. Il file `DiarioSogni-iOS-NON-FIRMATO.zip` contiene Runner.app senza firma: non è un installer e non si installa direttamente aprendolo su iPhone. I simboli privati non vengono allegati. Controllare che il workflow sia verde: l'esistenza dei sorgenti o dell'archivio non dimostra che tutte le prove siano passate.
 
