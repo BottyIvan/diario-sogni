@@ -1,0 +1,33 @@
+:root {
+  --ifm-color-primary: #5940b6;
+  --ifm-color-primary-dark: #5039a4;
+  --ifm-color-primary-darker: #4b369b;
+  --ifm-color-primary-darkest: #3e2d80;
+  --ifm-color-primary-light: #6448c8;
+  --ifm-color-primary-lighter: #6c51ce;
+  --ifm-color-primary-lightest: #8069d8;
+  --ifm-font-family-base: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --ifm-heading-font-family: Georgia, "Times New Roman", serif;
+  --ifm-heading-font-weight: 400;
+  --ifm-code-font-size: 92%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.theme-doc-markdown {
+  line-height: 1.75;
+}
+
+.theme-doc-markdown h1,
+.theme-doc-markdown h2,
+.theme-doc-markdown h3 {
+  letter-spacing: -0.025em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
