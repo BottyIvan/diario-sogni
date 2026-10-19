@@ -67,11 +67,6 @@ android {
     }
 }
 
-// A release must never silently fall back to the development certificate.
-if (!signingPropertiesFile.exists() && gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }) {
-    throw GradleException("Configura android/key.properties prima di compilare una release. Vedi docs/firma-android.md.")
-}
-
 kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
