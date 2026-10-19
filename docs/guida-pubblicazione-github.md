@@ -37,13 +37,23 @@ Pubblicheremo una nuova release e un nuovo APK, con numero di versione superiore
 
 Riferimenti: [gestione delle Releases GitHub](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository), [compilazione e firma Android con Flutter](https://docs.flutter.dev/deployment/android), [distribuzione Android al di fuori del Play Store](https://developer.android.com/distribute/marketing-tools/alternative-distribution).
 
-## Pubblicare la landing con GitHub Pages
+## Pubblicare il portale guide con GitHub Pages
 
-La landing è in `docs/index.html`, nella cartella già usata per le guide. Per pubblicarla:
+Il portale è realizzato con Docusaurus nella cartella `website/`; le guide in Markdown restano in `docs/`. Il menu laterale si aggiorna da `website/sidebars.js` e la pagina iniziale è in `website/src/pages/index.js`.
+
+Per vedere il sito sul proprio PC servono Node.js 20 o successivo. Dal terminale, nella cartella del progetto, esegui:
+
+```sh
+cd website
+npm ci
+npm start
+```
+
+Il sito si apre all’indirizzo indicato nel terminale. Per pubblicarlo, il workflow `.github/workflows/gh-pages.yml` installa le dipendenze, genera il sito e lo carica automaticamente a ogni push sul branch `main`. Per la prima pubblicazione:
 
 1. Apri **Settings → Pages** nel repository GitHub.
 2. In **Build and deployment**, scegli **GitHub Actions**.
-3. Il deployment avverrà automaticamente tramite il file di workflow presente nel repository ad ogni push sul branch main.
+3. Invia le modifiche sul branch `main` e controlla il workflow **Deploy to GitHub Pages** nella sezione Actions.
 4. Attendi il completamento della pubblicazione: l’indirizzo del sito compare nella stessa sezione **Pages**.
 
-Le modifiche successive alla landing vengono pubblicate da GitHub Pages dopo il push sul branch `main`.
+Le modifiche alle guide Markdown o al portale vengono pubblicate automaticamente dopo il push sul branch `main`.

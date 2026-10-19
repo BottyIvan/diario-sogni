@@ -1,10 +1,30 @@
-# iPhone: revisione del codice e prove
+# Come installare Diario dei sogni su iPhone
 
-Questa è una versione iOS preliminare dello stesso progetto Flutter. La Release iOS contiene i sorgenti, non un'app firmata installabile con un tocco. La Release Android rimane separata e utilizzabile.
+L’app è stata provata su un iPhone e viene distribuita come app firmata, installabile via Internet (OTA). Non serve collegare il telefono al computer né scaricare un file da aprire.
 
-## Stato verificato
+## Installa l’app
 
-Il [controllo macOS/Xcode](https://github.com/SboMusic/diario-sogni/actions/runs/38584268550) ha superato analisi, 21 test Dart, 4 test nativi, compilazione simulatore e compilazione iPhone senza firma. Minimo iOS 15. Le prove reali sul telefono elencate sotto restano necessarie: i test nativi non eseguono la trascrizione con il modello né verificano un servizio cloud.
+1. **Apri questa guida dal tuo iPhone usando Safari.**
+2. **Tocca [Installa su iPhone](itms-services://?action=download-manifest&url=https://github.com/BottyIvan/diario-sogni/releases/latest/download/manifest.plist).**
+3. Quando compare la richiesta, conferma l’installazione. Attendi qualche istante: l’icona Diario dei sogni apparirà sulla schermata Home.
+4. Apri l’app e consenti l’accesso al microfono quando richiesto per registrare un sogno.
+
+L’installazione è possibile solo sugli iPhone inclusi nel profilo di autorizzazione della versione. Se compare un messaggio che il dispositivo non è autorizzato, contatta chi ti ha fornito il link: dovrà aggiungere il tuo iPhone alla distribuzione e pubblicare una versione aggiornata. L’app non è distribuita tramite App Store.
+
+### Se l’installazione non parte
+
+- Assicurati di aprire il link da **Safari sull’iPhone**, non dal computer o da un browser diverso.
+- Controlla che l’iPhone sia autorizzato per questa versione e che sia connesso a Internet.
+- Se iOS chiede di autorizzare l’app, apri **Impostazioni → Generali → VPN e gestione dispositivo** e segui le indicazioni mostrate.
+- Se la pagina non trova una versione disponibile, la nuova release potrebbe non essere ancora stata pubblicata.
+
+I sogni sono salvati sul telefono. Prima di rimuovere l’app, sincronizza i sogni che vuoi conservare.
+
+## Stato e compatibilità
+
+La versione iOS è stata provata su un iPhone reale. La distribuzione OTA utilizza un file IPA firmato per i dispositivi autorizzati nel profilo Ad Hoc; non è un’installazione pubblica senza restrizioni. Il requisito minimo è iOS 15.
+
+Il [controllo macOS/Xcode](https://github.com/SboMusic/diario-sogni/actions/runs/38584268550) ha superato analisi, 21 test Dart, 4 test nativi, compilazione simulatore e compilazione iPhone senza firma. Queste verifiche automatiche si affiancano alla prova reale dell’app.
 
 ## Scaricare dal proprio PC
 
@@ -31,9 +51,13 @@ Riepiloghi settimanali/mensili, assistenti IA esterni, connettori OAuth e sincro
 
 La versione Apple usa i formati decodificabili da AVFoundation. Gli audio M4A di Android e iPhone sono il percorso previsto. Gli audio WebM/Opus registrati dal browser possono essere importati nell'archivio, ma ascolto e trascrizione su iPhone richiedono ancora un decoder compatibile: non è garantito il loro supporto.
 
-## Build automatica e verifica gratuita sul Mac di GitHub
+## Pubblicazione e distribuzione OTA
 
 Alla pubblicazione di una GitHub Release, il workflow `Build release artifacts` compila Android e iOS firmati e allega `DiarioSogni-iOS.ipa` e l'APK alla release. L'IPA è Ad Hoc: si installa via OTA solo sui dispositivi registrati nel profilo di provisioning. Servono le secret descritte in [configurare le secret di release](configurazione-secret-release.md); senza di esse la build si blocca. Il risultato non include credenziali Apple, certificati o simboli privati.
+
+Il pulsante **Installa su iPhone** sulla pagina del progetto apre il manifest della release pubblicata più recente. Aprire la pagina in Safari sull’iPhone e toccare il pulsante per avviare l’installazione.
+
+## Verifiche automatiche
 
 Nel repository scegliere Actions → Verifica iPhone per le verifiche. Il controllo usa un runner macOS standard per repository pubblico, senza certificati e senza account sviluppatore Apple. Esegue analisi Dart, test comuni, compilazione per simulatore, prove native del convertitore e compilazione iPhone senza firma.
 
@@ -55,7 +79,7 @@ In Xcode selezionare Runner → Signing & Capabilities, scegliere il proprio tea
 
 Un account Apple gratuito consente prove personali con firma di breve durata (7 giorni), che va rinnovata. TestFlight e App Store richiedono il programma sviluppatori a pagamento. Un file IPA allegato a GitHub non elimina questi requisiti. Prima di scegliere App Store va verificata anche l'identità pubblica del venditore: il nome SboMusic nel codice non garantisce che Apple mostri soltanto quel nome.
 
-## Prove sul telefono da comunicare
+## Verifiche aggiuntive e segnalazione problemi
 
 Usare inizialmente sogni di prova e una cartella separata, evitando di eliminare contenuti reali durante i test.
 
